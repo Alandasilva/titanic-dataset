@@ -3,7 +3,7 @@
     "path": "D:/Documentos/titanic-dataset/titanic_analysis.Rmd",
     "project_path": "titanic_analysis.Rmd",
     "type": "r_markdown",
-    "hash": "3757632720",
+    "hash": "3319924229",
     "contents": "",
     "dirty": false,
     "created": 1643310927456.0,
@@ -14,15 +14,15 @@
         "chunk_output_type": "inline",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "56,0",
-        "scrollLine": "26"
+        "cursorPosition": "20,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1643309995,
+    "lastKnownWriteTime": 1643326824,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1643309995,
+    "last_content_update": 1643326824164,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -1,0 +1,2 @@
+"0","titanic_df <- subset(titanic_train, select = c('Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare','Embarked'))"
+"0","knitr::kable(head(titanic_df))"
