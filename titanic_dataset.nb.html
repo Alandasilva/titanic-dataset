@@ -215,21 +215,84 @@ pre code {
 
 
 <!-- rnb-text-begin -->
-<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
-<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
+<div id="load-library-titanic" class="section level2">
+<h2>Load library titanic</h2>
+<p>O conjunto de dados pode ser obtido por meio do link: <a href="https://www.kaggle.com/c/titanic/data" class="uri">https://www.kaggle.com/c/titanic/data</a>. Por meio do software R podemos obter os dados por carrgando a biblioteca <em>titanic</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luc3RhbGwucGFja2FnZXMoJ3RpdGFuaWMnKVxubGlicmFyeSgndGl0YW5pYycpXG5gYGAifQ== -->
+<pre class="r"><code>#install.packages(&#39;titanic&#39;)
+library(&#39;titanic&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+<p>O conjunto de dados de teste conta com as seguintes variáveis: PassenderId: Passenger ID, Survived: Passnager Survival Indicator, Pclass: Passenger Class, Name: Name, Sex: Sex, Age: Age, SibSp: Number of Siblings/Spouses Aboard, Parch: Number of Parents/Children Aboard, Ticket: Ticket Number, Fare: Passenger Fare, Cabin: Cabin and Embarked: Port of Embarkation. Entretanto, vamos considerar as variáveis Survived, Pclass, Sex, Age, SibSp, Parch e Embarked.</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGl0YW5pY19kZiA8LSBzdWJzZXQodGl0YW5pY190cmFpbiwgc2VsZWN0ID0gYygnU3Vydml2ZWQnLCAnUGNsYXNzJywgJ1NleCcsICdBZ2UnLCAnU2liU3AnLCAnUGFyY2gnLCAnRmFyZScsJ0VtYmFya2VkJykpXG5rbml0cjo6a2FibGUoaGVhZCh0aXRhbmljX2RmKSlcbmBgYCJ9 -->
+<pre class="r"><code>titanic_df &lt;- subset(titanic_train, select = c(&#39;Survived&#39;, &#39;Pclass&#39;, &#39;Sex&#39;, &#39;Age&#39;, &#39;SibSp&#39;, &#39;Parch&#39;, &#39;Fare&#39;,&#39;Embarked&#39;))
+knitr::kable(head(titanic_df))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>O conjunto de dados de treino conta com 891 observações e o conjunto de teste com 418 observações.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKHRpdGFuaWNfZGYpXG5gYGAifQ== -->
+<pre class="r"><code>dim(titanic_df)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Fazendo uma breve verificação sobre a presença de valores faltantes, temos que apenas a variável <em>Age</em> apresenta valores faltantes</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFfc3VtIDwtIGFwcGx5KFggPSB0aXRhbmljX2RmLCBNQVJHSU4gPSAyLCBGVU4gPSBmdW5jdGlvbih4KSBzdW0oaXMubmEoeCkpKSBcbmtuaXRyOjprYWJsZSh0KG5hX3N1bSkpXG5gYGAifQ== -->
+<pre class="r"><code>na_sum &lt;- apply(X = titanic_df, MARGIN = 2, FUN = function(x) sum(is.na(x))) 
+knitr::kable(t(na_sum))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Podemos observar que apenas a variável <strong>Age</strong> apresenta valores faltantes pelo gráfico a seguir.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luc3RhbGwucGFja2FnZXMoJ0FtZWxpYScpXG5saWJyYXJ5KEFtZWxpYSlcbm1pc3NtYXAodGl0YW5pY19kZiwgY29sPWMoJ3JlZCcsICd3aGl0ZScpLCBidHk9J2JsYWNrJylcbmBgYCJ9 -->
+<pre class="r"><code>#install.packages(&#39;Amelia&#39;)
+library(Amelia)
+missmap(titanic_df, col=c(&#39;red&#39;, &#39;white&#39;), bty=&#39;black&#39;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="vizualização-dos-dados" class="section level2">
+<h2>Vizualização dos dados</h2>
+<p>Vamos utilizar a biblioteca ggplot2 para tal</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxuZ2dwbG90KHRpdGFuaWNfZGYsIGFlcyh4ID0gU3Vydml2ZWQpKSArXG4gIGdlb21fYmFyKHdpZHRoPTAuNSwgZmlsbCA9IFwiY29yYWxcIikgK1xuICBnZW9tX3RleHQoc3RhdD0nY291bnQnLCBhZXMobGFiZWw9c3RhdChjb3VudCkpLCB2anVzdD0tMC41KSArXG4gIHRoZW1lX2NsYXNzaWMoKVxuYGBgIn0= -->
+<pre class="r"><code>library(ggplot2)
+ggplot(titanic_df, aes(x = Survived)) +
+  geom_bar(width=0.5, fill = &quot;coral&quot;) +
+  geom_text(stat=&#39;count&#39;, aes(label=stat(count)), vjust=-0.5) +
+  theme_classic()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpdGFuaWNfZGYsIGFlcyh4ID0gU3Vydml2ZWQsIGZpbGw9U2V4KSkgK1xuIGdlb21fYmFyKHBvc2l0aW9uID0gcG9zaXRpb25fZG9kZ2UoKSkgK1xuIGdlb21fdGV4dChzdGF0PSdjb3VudCcsIFxuICAgICAgICAgICBhZXMobGFiZWw9c3RhdChjb3VudCkpLCBcbiAgICAgICAgICAgcG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSh3aWR0aD0xKSwgdmp1c3Q9LTAuNSkrXG4gdGhlbWVfY2xhc3NpYygpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(titanic_df, aes(x = Survived, fill=Sex)) +
+ geom_bar(position = position_dodge()) +
+ geom_text(stat=&#39;count&#39;, 
+           aes(label=stat(count)), 
+           position = position_dodge(width=1), vjust=-0.5)+
+ theme_classic()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQpwbG90KGNhcnMpDQpgYGANCg0KQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLg0KDQpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4NCg0KVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyBMb2FkIGxpYnJhcnkgdGl0YW5pYw0KDQpPIGNvbmp1bnRvIGRlIGRhZG9zIHBvZGUgc2VyIG9idGlkbyBwb3IgbWVpbyBkbyBsaW5rOiBodHRwczovL3d3dy5rYWdnbGUuY29tL2MvdGl0YW5pYy9kYXRhLg0KUG9yIG1laW8gZG8gc29mdHdhcmUgUiBwb2RlbW9zIG9idGVyIG9zIGRhZG9zIHBvciBjYXJyZ2FuZG8gYSBiaWJsaW90ZWNhICp0aXRhbmljKi4NCg0KYGBge3J9DQojaW5zdGFsbC5wYWNrYWdlcygndGl0YW5pYycpDQpsaWJyYXJ5KCd0aXRhbmljJykNCmBgYA0KDQpPIGNvbmp1bnRvIGRlIGRhZG9zIGRlIHRlc3RlIGNvbnRhIGNvbSBhcyBzZWd1aW50ZXMgdmFyacOhdmVpczogUGFzc2VuZGVySWQ6IFBhc3NlbmdlciBJRCwgU3Vydml2ZWQ6IFBhc3NuYWdlciBTdXJ2aXZhbCBJbmRpY2F0b3IsIFBjbGFzczogUGFzc2VuZ2VyIENsYXNzLCBOYW1lOiBOYW1lLCBTZXg6IFNleCwgQWdlOiBBZ2UsIFNpYlNwOiBOdW1iZXIgb2YgU2libGluZ3MvU3BvdXNlcyBBYm9hcmQsIFBhcmNoOiBOdW1iZXIgb2YgUGFyZW50cy9DaGlsZHJlbiBBYm9hcmQsIFRpY2tldDogVGlja2V0IE51bWJlciwgRmFyZTogUGFzc2VuZ2VyIEZhcmUsIENhYmluOiBDYWJpbiBhbmQgRW1iYXJrZWQ6IFBvcnQgb2YgRW1iYXJrYXRpb24uIA0KRW50cmV0YW50bywgdmFtb3MgY29uc2lkZXJhciBhcyB2YXJpw6F2ZWlzIFN1cnZpdmVkLCBQY2xhc3MsIFNleCwgQWdlLCBTaWJTcCwgUGFyY2ggZSBFbWJhcmtlZC4NCmBgYHtyLCBlY2hvID0gVFJVRX0NCnRpdGFuaWNfZGYgPC0gc3Vic2V0KHRpdGFuaWNfdHJhaW4sIHNlbGVjdCA9IGMoJ1N1cnZpdmVkJywgJ1BjbGFzcycsICdTZXgnLCAnQWdlJywgJ1NpYlNwJywgJ1BhcmNoJywgJ0ZhcmUnLCdFbWJhcmtlZCcpKQ0Ka25pdHI6OmthYmxlKGhlYWQodGl0YW5pY19kZikpDQpgYGANCk8gY29uanVudG8gZGUgZGFkb3MgZGUgdHJlaW5vIGNvbnRhIGNvbSA4OTEgb2JzZXJ2YcOnw7VlcyBlIG8gY29uanVudG8gZGUgdGVzdGUgY29tIDQxOCBvYnNlcnZhw6fDtWVzLg0KYGBge3IsIGVjaG89VFJVRX0NCmRpbSh0aXRhbmljX2RmKQ0KYGBgDQpGYXplbmRvIHVtYSBicmV2ZSB2ZXJpZmljYcOnw6NvIHNvYnJlIGEgcHJlc2Vuw6dhIGRlIHZhbG9yZXMgZmFsdGFudGVzLCB0ZW1vcyBxdWUgYXBlbmFzIGEgdmFyacOhdmVsICpBZ2UqIGFwcmVzZW50YSB2YWxvcmVzIGZhbHRhbnRlcw0KYGBge3IsIGVjaG89VFJVRX0NCm5hX3N1bSA8LSBhcHBseShYID0gdGl0YW5pY19kZiwgTUFSR0lOID0gMiwgRlVOID0gZnVuY3Rpb24oeCkgc3VtKGlzLm5hKHgpKSkgDQprbml0cjo6a2FibGUodChuYV9zdW0pKQ0KYGBgDQpQb2RlbW9zIG9ic2VydmFyIHF1ZSBhcGVuYXMgYSB2YXJpw6F2ZWwgKipBZ2UqKiBhcHJlc2VudGEgdmFsb3JlcyBmYWx0YW50ZXMgcGVsbyBncsOhZmljbyBhIHNlZ3Vpci4NCmBgYHtyLCBmaWcuYWxpZ249J2NlbnRlcicsIG1lc3NhZ2U9RkFMU0V9DQojaW5zdGFsbC5wYWNrYWdlcygnQW1lbGlhJykNCmxpYnJhcnkoQW1lbGlhKQ0KbWlzc21hcCh0aXRhbmljX2RmLCBjb2w9YygncmVkJywgJ3doaXRlJyksIGJ0eT0nYmxhY2snKQ0KYGBgDQojIyBWaXp1YWxpemHDp8OjbyBkb3MgZGFkb3MNCg0KVmFtb3MgdXRpbGl6YXIgYSBiaWJsaW90ZWNhIGdncGxvdDIgcGFyYSB0YWwNCmBgYHtyLCBmaWcuYWxpZ249J2NlbnRlcid9DQpsaWJyYXJ5KGdncGxvdDIpDQpnZ3Bsb3QodGl0YW5pY19kZiwgYWVzKHggPSBTdXJ2aXZlZCkpICsNCiAgZ2VvbV9iYXIod2lkdGg9MC41LCBmaWxsID0gImNvcmFsIikgKw0KICBnZW9tX3RleHQoc3RhdD0nY291bnQnLCBhZXMobGFiZWw9c3RhdChjb3VudCkpLCB2anVzdD0tMC41KSArDQogIHRoZW1lX2NsYXNzaWMoKQ0KYGBgDQoNCmBgYHtyLCBmaWcuYWxpZ249J2NlbnRlcid9DQpnZ3Bsb3QodGl0YW5pY19kZiwgYWVzKHggPSBTdXJ2aXZlZCwgZmlsbD1TZXgpKSArDQogZ2VvbV9iYXIocG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSgpKSArDQogZ2VvbV90ZXh0KHN0YXQ9J2NvdW50JywgDQogICAgICAgICAgIGFlcyhsYWJlbD1zdGF0KGNvdW50KSksIA0KICAgICAgICAgICBwb3NpdGlvbiA9IHBvc2l0aW9uX2RvZGdlKHdpZHRoPTEpLCB2anVzdD0tMC41KSsNCiB0aGVtZV9jbGFzc2ljKCkNCmBgYA0KDQo=</div>
 
 
 
@@ -276,7 +339,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("teste.Rmd");
+  window.initializeSourceEmbed("titanic_dataset.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

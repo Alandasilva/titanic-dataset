@@ -1,0 +1,56 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Load library titanic
+
+O conjunto de dados pode ser obtido por meio do link: https://www.kaggle.com/c/titanic/data.
+Por meio do software R podemos obter os dados por carrgando a biblioteca *titanic*.
+
+```{r}
+#install.packages('titanic')
+library('titanic')
+```
+
+O conjunto de dados de teste conta com as seguintes variáveis: PassenderId: Passenger ID, Survived: Passnager Survival Indicator, Pclass: Passenger Class, Name: Name, Sex: Sex, Age: Age, SibSp: Number of Siblings/Spouses Aboard, Parch: Number of Parents/Children Aboard, Ticket: Ticket Number, Fare: Passenger Fare, Cabin: Cabin and Embarked: Port of Embarkation. 
+Entretanto, vamos considerar as variáveis Survived, Pclass, Sex, Age, SibSp, Parch e Embarked.
+```{r, echo = TRUE}
+titanic_df <- subset(titanic_train, select = c('Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare','Embarked'))
+knitr::kable(head(titanic_df))
+```
+O conjunto de dados de treino conta com 891 observações e o conjunto de teste com 418 observações.
+```{r, echo=TRUE}
+dim(titanic_df)
+```
+Fazendo uma breve verificação sobre a presença de valores faltantes, temos que apenas a variável *Age* apresenta valores faltantes
+```{r, echo=TRUE}
+na_sum <- apply(X = titanic_df, MARGIN = 2, FUN = function(x) sum(is.na(x))) 
+knitr::kable(t(na_sum))
+```
+Podemos observar que apenas a variável **Age** apresenta valores faltantes pelo gráfico a seguir.
+```{r, fig.align='center', message=FALSE}
+#install.packages('Amelia')
+library(Amelia)
+missmap(titanic_df, col=c('red', 'white'), bty='black')
+```
+## Vizualização dos dados
+
+Vamos utilizar a biblioteca ggplot2 para tal
+```{r, fig.align='center'}
+library(ggplot2)
+ggplot(titanic_df, aes(x = Survived)) +
+  geom_bar(width=0.5, fill = "coral") +
+  geom_text(stat='count', aes(label=stat(count)), vjust=-0.5) +
+  theme_classic()
+```
+
+```{r, fig.align='center'}
+ggplot(titanic_df, aes(x = Survived, fill=Sex)) +
+ geom_bar(position = position_dodge()) +
+ geom_text(stat='count', 
+           aes(label=stat(count)), 
+           position = position_dodge(width=1), vjust=-0.5)+
+ theme_classic()
+```
+
