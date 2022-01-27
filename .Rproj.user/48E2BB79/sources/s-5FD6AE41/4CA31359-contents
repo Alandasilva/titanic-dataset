@@ -1,6 +1,6 @@
 ---
 title: "R Notebook - Titanic Dataset"
-output: html_notebook
+output: html_document
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -27,7 +27,8 @@ Por meio do software R podemos obter os dados por carrgando a biblioteca *titani
 library('titanic')
 ```
 
-O conjunto de dados de teste conta com as seguintes variáveis: PassenderId: Passenger ID, Survived: Passnager Survival Indicator, Pclass:
+O conjunto de dados de teste conta com as seguintes variáveis: PassenderId: Passenger ID, Survived: Passnager Survival Indicator, Pclass: Passenger Class, Name: Name, Sex: Sex, Age: Age, SibSp: Number of Siblings/Spouses Aboard, Parch: Number of Parents/Children Aboard, Ticket: Ticket Number, Fare: Passenger Fare, Cabin: Cabin and Embarked: Port of Embarkation.
+
 ```{r, echo = TRUE}
 knitr::kable(head(titanic_train))
 ```

@@ -1,0 +1,35 @@
+"0","install.packages('Amelia')"
+"2","Installing package into ‘C:/Users/alans/Documents/R/win-library/4.1’
+(as ‘lib’ is unspecified)
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/Amelia_1.8.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2275912 bytes (2.2 MB)
+"
+"2","downloaded 2.2 MB
+
+"
+"1","package ‘Amelia’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","The downloaded binary packages are in
+	C:\Users\alans\AppData\Local\Temp\RtmpodDNzi\downloaded_packages"
+"1",""
+"1","
+"
+"0","library(Amelia)"
+"2","Carregando pacotes exigidos: Rcpp
+"
+"2","## 
+## Amelia II: Multiple Imputation
+## (Version 1.8.0, built: 2021-05-26)
+## Copyright (C) 2005-2022 James Honaker, Gary King and Matthew Blackwell
+## Refer to http://gking.harvard.edu/amelia/ for more information
+## 
+"
+"0","missmap(titanic_train, col=c(“black”, “grey”))"
+"2","Error: unexpected input in ""missmap(titanic_train, col=c(“""
+"
